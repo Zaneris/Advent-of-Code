@@ -14,6 +14,18 @@ public abstract class AoCBase : IAoC
         InputText = File.ReadAllText($"../../../{year}/Inputs/{day}.txt");
     }
 
-    public abstract IAoC Part1();
-    public abstract IAoC Part2();
+    protected abstract void InternalPart1();
+    protected abstract void InternalPart2();
+
+    public IAoC Part1()
+    {
+        InternalPart1();
+        return this;
+    }
+
+    public IAoC Part2()
+    {
+        InternalPart2();
+        return this;
+    }
 }

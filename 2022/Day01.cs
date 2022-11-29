@@ -6,16 +6,14 @@ public class Day01 : AoCBase
 {
     public Day01() : base(2022, 1) { }
 
-    public override IAoC Part1()
+    protected override void InternalPart1()
     {
         Console.WriteLine("Part 1");
         Console.WriteLine($"Input characters: {InputText.Length}");
-        return this;
     }
 
-    public override IAoC Part2()
+    protected override void InternalPart2()
     {
         Console.WriteLine("Part 2");
-        return this;
     }
 }
