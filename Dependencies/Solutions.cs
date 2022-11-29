@@ -14,7 +14,7 @@ public class Solutions : IEnumerable<IAoC>
             .Where(p => baseType.IsAssignableFrom(p) && !p.IsAbstract);
         foreach (var type in types)
         {
-            _list.Add(((IAoC)Activator.CreateInstance(type)!)!);
+            _list.Add((IAoC)Activator.CreateInstance(type)!);
         }
     }
 
