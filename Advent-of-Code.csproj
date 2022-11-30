@@ -12,4 +12,8 @@
       <Folder Include="2022\Inputs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+    </ItemGroup>
+
 </Project>

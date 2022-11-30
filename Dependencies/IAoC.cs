@@ -6,4 +6,5 @@ public interface IAoC
     public int Day { get; }
     public IAoC Part1();
     public IAoC Part2();
+    public void Benchmark();
 }

@@ -6,4 +6,4 @@ var today = solutions
     .OrderByDescending(x => x.Day)
     .First();
 
-today.Part1().Part2();
+today.Benchmark();
