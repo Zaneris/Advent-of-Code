@@ -1,10 +1,7 @@
 using AdventOfCodeSupport;
 
-var solutions = new Solutions();
-var today = solutions
-    .Where(x => x.Year == 2022)
-    .OrderByDescending(x => x.Day)
-    .First();
+var solutions = new AdventSolutions();
+var today = solutions.GetMostRecentDay();
 
 // today.Part1().Part2();
 today.Benchmark();

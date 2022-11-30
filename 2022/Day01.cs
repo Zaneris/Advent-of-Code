@@ -2,7 +2,7 @@ using AdventOfCodeSupport;
 
 namespace Advent_of_Code._2022;
 
-public class Day01 : AoCBase
+public class Day01 : AdventBase
 {
     public Day01() : base(2022, 1) { }
 
