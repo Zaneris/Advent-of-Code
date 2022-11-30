@@ -6,6 +6,7 @@
         <RootNamespace>Advent_of_Code</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AdventOfCodeSupport" Version="1.0.0" />
       <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
     </ItemGroup>
 

@@ -1,4 +1,4 @@
-using Advent_of_Code.Dependencies;
+using AdventOfCodeSupport;
 
 var solutions = new Solutions();
 var today = solutions
@@ -6,4 +6,4 @@ var today = solutions
     .OrderByDescending(x => x.Day)
     .First();
 
-today.Benchmark();
+today.Part1();

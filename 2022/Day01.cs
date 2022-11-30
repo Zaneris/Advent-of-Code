@@ -1,4 +1,4 @@
-using Advent_of_Code.Dependencies;
+using AdventOfCodeSupport;
 
 namespace Advent_of_Code._2022;
 
