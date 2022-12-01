@@ -1,7 +1,7 @@
 using AdventOfCodeSupport;
 
 var solutions = new AdventSolutions();
-var today = solutions.GetMostRecentDay();
+var day = solutions.GetMostRecentDay();
 
-// today.Part1().Part2();
-today.Benchmark();
+day.Part1().Part2();
+// day.Benchmark();
