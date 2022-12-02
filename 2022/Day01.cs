@@ -4,8 +4,6 @@ namespace AdventOfCode._2022;
 
 public class Day01 : AdventBase
 {
-    public Day01() : base(2022, 1) { }
-
     protected override void InternalPart1()
     {
         var elves = InputText.Trim().Split("\n\n");

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -7,7 +7,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    </PropertyGroup>
+      <UserSecretsId>c48be817-2ccc-4cc6-a3d3-9605047ef4b3</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="2018\Inputs" />
@@ -15,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AdventOfCodeSupport" Version="1.1.2" />
+      <PackageReference Include="AdventOfCodeSupport" Version="1.3.0" />
     </ItemGroup>
 
 </Project>
