@@ -4,7 +4,7 @@ namespace AdventOfCode._2022;
 
 public class Day04 : AdventBase
 {
-    class Range
+    private class Range
     {
         public Range(string range)
         {
