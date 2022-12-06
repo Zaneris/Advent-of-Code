@@ -4,8 +4,6 @@ namespace AdventOfCode._2018;
 
 public class Day01 : AdventBase
 {
-    public Day01() : base(2018, 1) { }
-
     protected override void InternalPart1()
     {
         long frequency = 0;
