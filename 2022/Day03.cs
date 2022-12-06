@@ -15,6 +15,7 @@ public class Day03 : AdventBase
             var match = part1.First(x => part2.Contains(x));
             sum += Priority(match);
         }
+
         Console.WriteLine(sum);
     }
 
@@ -29,6 +30,7 @@ public class Day03 : AdventBase
             var match = part1.First(x => part2.Contains(x) && part3.Contains(x));
             sum += Priority(match);
         }
+
         Console.WriteLine(sum);
     }
 
