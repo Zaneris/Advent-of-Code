@@ -4,7 +4,7 @@ namespace AdventOfCode._2022;
 
 public class Day02 : AdventBase
 {
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
         var rock = "A";
         var paper = "B";
@@ -22,7 +22,7 @@ public class Day02 : AdventBase
         var win = 6;
 
         var total = 0;
-        foreach (var line in InputLines)
+        foreach (var line in Input.Lines)
         {
             var choices = line.Split(' ');
             var points = loss;
@@ -48,10 +48,10 @@ public class Day02 : AdventBase
                 points += choiceScissors;
             total += points;
         }
-        Console.WriteLine(total);
+        return total;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
         var rock = "A";
         var paper = "B";
@@ -69,7 +69,7 @@ public class Day02 : AdventBase
         var win = 6;
 
         var total = 0;
-        foreach (var line in InputLines)
+        foreach (var line in Input.Lines)
         {
             var choices = line.Split(' ');
             var points = loss;
@@ -95,6 +95,6 @@ public class Day02 : AdventBase
             }
             total += points;
         }
-        Console.WriteLine(total);
+        return total;
     }
 }

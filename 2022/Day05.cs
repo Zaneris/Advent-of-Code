@@ -9,8 +9,8 @@ public class Day05 : AdventBase
 
     private void PrepStacks()
     {
-        _instructions = InputBlocks[1].Lines;
-        var blocks = InputBlocks[0].Lines;
+        _instructions = Input.Blocks[1].Lines;
+        var blocks = Input.Blocks[0].Lines;
         _stacks = new Stack<char>[9];
         for (var i = 0; i < 9; i++)
         {
@@ -28,28 +28,29 @@ public class Day05 : AdventBase
         }
     }
     
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
         PrepStacks();
         MoveBlocks(true);
-        PrintResult();
+        return BuildResult();
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
         PrepStacks();
         MoveBlocks(false);
-        PrintResult();
+        return BuildResult();
     }
 
-    private void PrintResult()
+    private string BuildResult()
     {
         var result = "";
         foreach (var stack in _stacks)
         {
             result += stack.Pop();
         }
-        Console.WriteLine(result);
+
+        return result;
     }
 
     private void MoveBlocks(bool part1)

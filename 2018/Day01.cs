@@ -4,26 +4,26 @@ namespace AdventOfCode._2018;
 
 public class Day01 : AdventBase
 {
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
         long frequency = 0;
-        foreach (var line in InputLines)
+        foreach (var line in Input.Lines)
         {
             var op = line[0];
             var num = int.Parse(line[1..]);
             if (op == '+') frequency += num;
             else frequency -= num;
         }
-        Console.WriteLine(frequency);
+        return frequency;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
         long frequency = 0;
         var occurrences = new HashSet<long>();
         while (true)
         {
-            foreach (var line in InputLines)
+            foreach (var line in Input.Lines)
             {
                 var op = line[0];
                 var num = int.Parse(line[1..]);
@@ -31,8 +31,7 @@ public class Day01 : AdventBase
                 else frequency -= num;
                 if (occurrences.Contains(frequency))
                 {
-                    Console.WriteLine(frequency);
-                    return;
+                    return frequency;
                 }
 
                 occurrences.Add(frequency);

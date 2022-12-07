@@ -17,9 +17,9 @@ public class Day04 : AdventBase
         public int Max { get; set; }
     }
     
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
-        var pairs = InputLines
+        var pairs = Input.Lines
             .Select(line => line.Split(','))
             .Select(split => (new Range(split[0]), new Range(split[1])))
             .ToList();
@@ -34,12 +34,13 @@ public class Day04 : AdventBase
                             && x.Item2.Max >= x.Item1.Min
                             && x.Item2.Max <= x.Item1.Max))
             .ToList();
-        Console.WriteLine(fullyContains.Count);
+        
+        return fullyContains.Count;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
-        var pairs = InputLines
+        var pairs = Input.Lines
             .Select(line => line.Split(','))
             .Select(split => (new Range(split[0]), new Range(split[1])))
             .ToList();
@@ -50,6 +51,7 @@ public class Day04 : AdventBase
                         || (x.Item2.Min >= x.Item1.Min && x.Item2.Min <= x.Item1.Max) 
                         || (x.Item2.Max >= x.Item1.Min && x.Item2.Max <= x.Item1.Max))
             .ToList();
-        Console.WriteLine(fullyContains.Count);
+        
+        return fullyContains.Count;
     }
 }

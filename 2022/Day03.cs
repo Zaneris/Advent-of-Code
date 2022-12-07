@@ -4,10 +4,10 @@ namespace AdventOfCode._2022;
 
 public class Day03 : AdventBase
 {
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
         long sum = 0;
-        foreach (var line in InputLines)
+        foreach (var line in Input.Lines)
         {
             var part1 = line.Substring(0, line.Length / 2);
             var part2 = line.Substring(line.Length / 2, line.Length / 2);
@@ -16,22 +16,22 @@ public class Day03 : AdventBase
             sum += Priority(match);
         }
 
-        Console.WriteLine(sum);
+        return sum;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
         long sum = 0;
-        for (var i = 0; i < InputLines.Length; i += 3)
+        for (var i = 0; i < Input.Lines.Length; i += 3)
         {
-            var part1 = InputLines[i];
-            var part2 = InputLines[i + 1];
-            var part3 = InputLines[i + 2];
+            var part1 = Input.Lines[i];
+            var part2 = Input.Lines[i + 1];
+            var part3 = Input.Lines[i + 2];
             var match = part1.First(x => part2.Contains(x) && part3.Contains(x));
             sum += Priority(match);
         }
 
-        Console.WriteLine(sum);
+        return sum;
     }
 
     private int Priority(char c)

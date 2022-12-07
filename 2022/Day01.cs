@@ -4,31 +4,31 @@ namespace AdventOfCode._2022;
 
 public class Day01 : AdventBase
 {
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
-        var elves = InputText.Trim().Split("\n\n");
+        var elves = Input.Blocks;
         long max = 0;
         foreach (var elf in elves)
         {
             long total = 0;
-            foreach (var calorie in elf.Split('\n'))
+            foreach (var calorie in elf.Lines)
             {
                 total += int.Parse(calorie);
             }
 
             if (total > max) max = total;
         }
-        Console.WriteLine(max);
+        return max;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
-        var elves = InputText.Trim().Split("\n\n");
+        var elves = Input.Blocks;
         var totals = new List<long>();
         foreach (var elf in elves)
         {
             long total = 0;
-            foreach (var calorie in elf.Split('\n'))
+            foreach (var calorie in elf.Lines)
             {
                 total += int.Parse(calorie);
             }
@@ -37,6 +37,6 @@ public class Day01 : AdventBase
         }
 
         var sum = totals.OrderByDescending(x => x).Take(3).Sum();
-        Console.WriteLine(sum);
+        return sum;
     }
 }

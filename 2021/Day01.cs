@@ -4,31 +4,32 @@ namespace AdventOfCode._2021;
 
 public class Day01 : AdventBase
 {
-    protected override void InternalPart1()
+    protected override object InternalPart1()
     {
         int? lastNum = null;
         var increased = 0;
         
-        foreach (var line in InputLines)
+        foreach (var line in Input.Lines)
         {
             var num = int.Parse(line);
             if (num > lastNum) increased++;
             lastNum = num;
         }
-        Console.WriteLine(increased);
+
+        return increased;
     }
 
-    protected override void InternalPart2()
+    protected override object InternalPart2()
     {
         int? lastNum = null;
         var increased = 0;
         
-        for (var i = 0; i < InputLines.Length - 2; i++)
+        for (var i = 0; i < Input.Lines.Length - 2; i++)
         {
-            var num = int.Parse(InputLines[i]) + int.Parse(InputLines[i + 1]) + int.Parse(InputLines[i + 2]);
+            var num = int.Parse(Input.Lines[i]) + int.Parse(Input.Lines[i + 1]) + int.Parse(Input.Lines[i + 2]);
             if (num > lastNum) increased++;
             lastNum = num;
         }
-        Console.WriteLine(increased);
+        return increased;
     }
 }
