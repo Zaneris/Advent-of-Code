@@ -11,12 +11,27 @@ public class Day07 : AdventBase
     public class File
     {
         public Directory? Parent { get; init; }
-        public long Bytes { get; set; }
+        protected long _bytes;
+        public virtual long Bytes
+        {
+            get => _bytes;
+            init => _bytes = value;
+        }
     }
 
     public class Directory : File
     {
         public Dictionary<string, File> Contents { get; } = new();
+
+        public override long Bytes
+        {
+            get
+            {
+                if (_bytes != 0) return _bytes;
+                _bytes = Contents.Sum(x => x.Value.Bytes);
+                return _bytes;
+            }
+        }
     }
 
     [Benchmark]
@@ -66,35 +81,9 @@ public class Day07 : AdventBase
         }
     }
 
-    [Benchmark]
-    public void CalcDirSizes()
-    {
-        if (_root is null) BuildTree();
-        CalcDirSizes(_root!);
-    }
-
-    private void CalcDirSizes(Directory current)
-    {
-        foreach (var kvp in current.Contents)
-        {
-            if (kvp.Value is not Directory directory) continue;
-            if (!directory.Contents.Any(x => x.Value is Directory))
-            {
-                directory.Bytes = directory.Contents.Sum(x => x.Value.Bytes);
-                continue;
-            }
-            CalcDirSizes(directory);
-            directory.Bytes = directory.Contents.Sum(x => x.Value.Bytes);
-        }
-
-        if (current == _root)
-            current.Bytes = current.Contents.Sum(x => x.Value.Bytes);
-    }
-
     protected override object InternalPart1()
     {
         if (_root is null) BuildTree();
-        if (_root!.Bytes == 0) CalcDirSizes(_root);
         var lessThan100K = _directories
             .Where(x => x.Bytes <= 100_000)
             .Sum(x => x.Bytes);
@@ -105,13 +94,12 @@ public class Day07 : AdventBase
     protected override object InternalPart2()
     {
         if (_root is null) BuildTree();
-        if (_root!.Bytes == 0) CalcDirSizes(_root);
 
         const int maxSpace = 70_000_000;
         const int neededFree = 30_000_000;
         const int mustBeLessThan = maxSpace - neededFree;
 
-        var difference = _root.Bytes - mustBeLessThan;
+        var difference = _root!.Bytes - mustBeLessThan;
         var toRemove = _directories
             .Where(x => x.Bytes >= difference)
             .OrderBy(x => x.Bytes)
