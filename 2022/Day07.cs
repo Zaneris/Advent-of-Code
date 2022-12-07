@@ -1,26 +1,29 @@
 using AdventOfCodeSupport;
+using BenchmarkDotNet.Attributes;
 
 namespace AdventOfCode._2022;
 
 public class Day07 : AdventBase
 {
-    private readonly Directory _root = new();
+    private Directory? _root;
+    private List<Directory> _directories = null!;
 
-    private readonly List<Directory> _directories = new();
-
-    private class File
+    public class File
     {
         public Directory Parent { get; init; } = null!;
         public long Bytes { get; set; }
     }
 
-    private class Directory : File
+    public class Directory : File
     {
         public Dictionary<string, File> Contents { get; } = new();
     }
 
-    private void BuildTree()
+    [Benchmark]
+    public void BuildTree()
     {
+        _root = new Directory();
+        _directories = new List<Directory>();
         var currentDirectory = _root;
         foreach (var line in Input.Lines)
         {
@@ -63,7 +66,14 @@ public class Day07 : AdventBase
         }
     }
 
-    private void SizeUp(Directory current)
+    [Benchmark]
+    public void CalcDirSizes()
+    {
+        if (_root is null) BuildTree();
+        CalcDirSizes(_root!);
+    }
+
+    private void CalcDirSizes(Directory current)
     {
         foreach (var kvp in current.Contents)
         {
@@ -73,7 +83,7 @@ public class Day07 : AdventBase
                 directory.Bytes = directory.Contents.Sum(x => x.Value.Bytes);
                 continue;
             }
-            SizeUp(directory);
+            CalcDirSizes(directory);
             directory.Bytes = directory.Contents.Sum(x => x.Value.Bytes);
         }
         
@@ -83,8 +93,8 @@ public class Day07 : AdventBase
     
     protected override object InternalPart1()
     {
-        BuildTree();
-        SizeUp(_root);
+        if (_root is null) BuildTree();
+        if (_root!.Bytes == 0) CalcDirSizes(_root);
         var lessThan100K = _directories
             .Where(x => x.Bytes <= 100_000)
             .Sum(x => x.Bytes);
@@ -94,8 +104,8 @@ public class Day07 : AdventBase
 
     protected override object InternalPart2()
     {
-        BuildTree();
-        SizeUp(_root);
+        if (_root is null) BuildTree();
+        if (_root!.Bytes == 0) CalcDirSizes(_root);
 
         const int maxSpace = 70_000_000;
         const int neededFree = 30_000_000;
@@ -103,6 +113,7 @@ public class Day07 : AdventBase
         
         var difference = _root.Bytes - mustBeLessThan;
         var toRemove = _directories
+            .Where(x => x.Bytes >= difference)
             .OrderBy(x => x.Bytes)
             .First(x => x.Bytes >= difference);
         
