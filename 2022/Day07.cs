@@ -10,7 +10,7 @@ public class Day07 : AdventBase
 
     public class File
     {
-        public Directory Parent { get; init; } = null!;
+        public Directory? Parent { get; init; }
         public long Bytes { get; set; }
     }
 
@@ -33,8 +33,8 @@ public class Day07 : AdventBase
                 currentDirectory = newDir switch
                 {
                     "/" => _root,
-                    ".." => currentDirectory.Parent,
-                    _ => (Directory)currentDirectory.Contents[newDir]
+                    ".." => currentDirectory!.Parent,
+                    _ => (Directory)currentDirectory!.Contents[newDir]
                 };
             }
             else if (line.StartsWith("$ ls"))
@@ -48,7 +48,7 @@ public class Day07 : AdventBase
                 {
                     Parent = currentDirectory
                 };
-                currentDirectory.Contents[newDir] = create;
+                currentDirectory!.Contents[newDir] = create;
                 _directories.Add(create);
             }
             else
@@ -56,8 +56,8 @@ public class Day07 : AdventBase
                 var file = line.Split(' ');
                 var size = long.Parse(file[0]);
                 var name = file[1];
-                
-                currentDirectory.Contents[name] = new File
+
+                currentDirectory!.Contents[name] = new File
                 {
                     Parent = currentDirectory,
                     Bytes = size
@@ -86,11 +86,11 @@ public class Day07 : AdventBase
             CalcDirSizes(directory);
             directory.Bytes = directory.Contents.Sum(x => x.Value.Bytes);
         }
-        
+
         if (current == _root)
             current.Bytes = current.Contents.Sum(x => x.Value.Bytes);
     }
-    
+
     protected override object InternalPart1()
     {
         if (_root is null) BuildTree();
@@ -98,7 +98,7 @@ public class Day07 : AdventBase
         var lessThan100K = _directories
             .Where(x => x.Bytes <= 100_000)
             .Sum(x => x.Bytes);
-        
+
         return lessThan100K;
     }
 
@@ -110,13 +110,13 @@ public class Day07 : AdventBase
         const int maxSpace = 70_000_000;
         const int neededFree = 30_000_000;
         const int mustBeLessThan = maxSpace - neededFree;
-        
+
         var difference = _root.Bytes - mustBeLessThan;
         var toRemove = _directories
             .Where(x => x.Bytes >= difference)
             .OrderBy(x => x.Bytes)
-            .First(x => x.Bytes >= difference);
-        
+            .First();
+
         return toRemove.Bytes;
     }
 }
