@@ -1,7 +1,9 @@
 using AdventOfCodeSupport;
 
 var solutions = new AdventSolutions();
-await solutions.DownloadInputsAsync();
 var day = solutions.GetMostRecentDay();
-//day.Part1().Part2();
-day.Benchmark();
+await day.DownloadInputAsync();
+day.Part1().Part2();
+//await day.SubmitPart1Async();
+//await day.SubmitPart2Async();
+//day.Benchmark();
