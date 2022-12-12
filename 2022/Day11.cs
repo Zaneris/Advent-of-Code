@@ -12,7 +12,7 @@ public class Day11 : AdventBase
         public int DivisibleBy { get; set; }
         public int IfTrue { get; set; }
         public int IfFalse { get; set; }
-        public int Inspected { get; set; }
+        public long Inspected { get; set; }
 
         public abstract long Operation(long old);
     }
@@ -99,7 +99,7 @@ public class Day11 : AdventBase
     {
         var monkeys = ParseMonkeys();
 
-        var lcd = monkeys.Aggregate<Monkey?, long>(1, (current, monkey) => current * monkey!.DivisibleBy);
+        var divisorProduct = monkeys.Aggregate<Monkey, long>(1, (current, monkey) => current * monkey.DivisibleBy);
 
         for (var i = 0; i < 10_000; i++)
         {
@@ -109,7 +109,7 @@ public class Day11 : AdventBase
                 {
                     var item = monkey.Items.Dequeue();
                     item = monkey.Operation(item);
-                    item %= lcd;
+                    item %= divisorProduct;
                     if (item % monkey.DivisibleBy == 0) monkeys[monkey.IfTrue].Items.Enqueue(item);
                     else monkeys[monkey.IfFalse].Items.Enqueue(item);
 
@@ -119,7 +119,7 @@ public class Day11 : AdventBase
         }
 
         var mostActive = monkeys.OrderByDescending(x => x.Inspected).Take(2).ToList();
-        var result = new BigInteger(mostActive[0].Inspected) * new BigInteger(mostActive[1].Inspected);
+        var result = mostActive[0].Inspected * mostActive[1].Inspected;
         
         return result;
     }

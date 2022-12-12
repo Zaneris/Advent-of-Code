@@ -5,8 +5,8 @@ namespace AdventOfCode._2022;
 
 public class Day12 : AdventBase
 {
-    private Point _start;
-    private Point _end;
+    private Point2d _start;
+    private Point2d _end;
 
     private void FindStartAndEnd(char[][] map)
     {
@@ -17,11 +17,11 @@ public class Day12 : AdventBase
                 switch (map[y][x])
                 {
                     case 'S':
-                        _start = new Point(y, x);
+                        _start = new Point2d(y, x);
                         map[y][x] = 'a';
                         break;
                     case 'E':
-                        _end = new Point(y, x);
+                        _end = new Point2d(y, x);
                         map[y][x] = 'z';
                         break;
                 }
@@ -33,17 +33,13 @@ public class Day12 : AdventBase
     {
         var map = Input.ToCharMap();
         FindStartAndEnd(map);
-        var pathFinder = new ShortestPath(map, _start, (point, _) => point == _end,
-            (oldChar, newChar) => newChar - oldChar <= 1);
-        return pathFinder.Run();
+        return map.ShortestPathSteps(_start, (point, _) => point == _end, (oldChar, newChar) => newChar - oldChar <= 1);
     }
 
     protected override object InternalPart2()
     {
         var map = Input.ToCharMap();
         FindStartAndEnd(map);
-        var pathFinder = new ShortestPath(map, _end, (_, c) => c == 'a',
-            (oldChar, newChar) => newChar - oldChar >= -1);
-        return pathFinder.Run();
+        return map.ShortestPathSteps(_end, (_, c) => c == 'a', (oldChar, newChar) => newChar - oldChar >= -1);
     }
 }
