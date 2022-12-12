@@ -29,12 +29,16 @@ public class Day12 : AdventBase
         }
     }
 
+    private bool EndFound(Point2d nextPoint, char nextPointChar) => nextPoint == _end;
+    private bool ValidStep(char oldPositionChar, char newPositionChar) => newPositionChar - oldPositionChar <= 1;
+
     protected override object InternalPart1()
     {
         var map = Input.ToCharMap();
         FindStartAndEnd(map);
-        return map.ShortestPathSteps(_start, (point, _) => point == _end, (oldChar, newChar) => newChar - oldChar <= 1);
+        return map.ShortestPathSteps(_start, EndFound, ValidStep);
     }
+
 
     protected override object InternalPart2()
     {
