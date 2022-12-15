@@ -4,16 +4,16 @@ public static class CharMapExtensions
 {
     private static readonly Point2d[] _diagonals = { new(1, 1), new(-1, 1), new(1, -1), new(-1, -1) };
     private static readonly Point2d[] _cardinals = { new(0, 1), new(1, 0), new(-1, 0), new(0, -1) };
-    
+
     /// <summary>
     /// Find number of steps for the shortest path between 2 points.
     /// </summary>
     /// <param name="map">The map to navigate.</param>
     /// <param name="start">Starting point.</param>
-    /// <param name="endRule">When is the end found, passes point and map char of current position.</param>
-    /// <param name="validStep">Is the step being attempted valid? Old map char, attempted map char.</param>
+    /// <param name="endRule">When is the end found? Passes point and map char of current position.</param>
+    /// <param name="validStep">Is the step being attempted valid? Previous map char, attempted map char.</param>
     /// <param name="diagonals">Can we move diagonally?</param>
-    public static long ShortestPathSteps(this char[][] map, Point2d start, Func<Point2d, char, bool> endRule, 
+    public static long ShortestPathSteps(this char[][] map, Point2d start, Func<Point2d, char, bool> endRule,
         Func<char, char, bool> validStep, bool diagonals = false)
     {
         var queue = new Queue<(Point2d position, long steps)>();
