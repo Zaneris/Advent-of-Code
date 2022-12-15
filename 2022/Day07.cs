@@ -1,5 +1,4 @@
 using AdventOfCodeSupport;
-using BenchmarkDotNet.Attributes;
 
 namespace AdventOfCode._2022;
 
@@ -34,8 +33,7 @@ public class Day07 : AdventBase
         }
     }
 
-    [Benchmark]
-    public void BuildTree()
+    protected override void InternalOnLoad()
     {
         _root = new Directory();
         _directories = new List<Directory>();
@@ -83,7 +81,6 @@ public class Day07 : AdventBase
 
     protected override object InternalPart1()
     {
-        if (_root is null) BuildTree();
         var lessThan100K = _directories
             .Where(x => x.Bytes <= 100_000)
             .Sum(x => x.Bytes);
@@ -93,8 +90,6 @@ public class Day07 : AdventBase
 
     protected override object InternalPart2()
     {
-        if (_root is null) BuildTree();
-
         const int maxSpace = 70_000_000;
         const int neededFree = 30_000_000;
         const int mustBeLessThan = maxSpace - neededFree;
