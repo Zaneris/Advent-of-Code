@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AdventOfCodeSupport" Version="2.3.0" />
+      <PackageReference Include="AdventOfCodeSupport" Version="2.3.2" />
     </ItemGroup>
 
 </Project>
