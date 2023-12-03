@@ -26,7 +26,7 @@ public class Day01 : AdventBase
         var end = increment > 0 ? line.Length : -1;
         for (var i = start; i != end; i += increment)
         {
-            if (line[i] >= '0' && line[i] <= '9')
+            if (line[i] is >= '1' and <= '9')
                 return line[i];
         }
 
@@ -55,7 +55,7 @@ public class Day01 : AdventBase
         var end = increment > 0 ? line.Length : -1;
         for (var i = start; i != end; i += increment)
         {
-            if (line[i] >= '0' && line[i] <= '9')
+            if (line[i] is >= '1' and <= '9')
                 return line[i];
             var wordNum = TextToNumber(line[i..]);
             if (wordNum is not null) return (char)wordNum;

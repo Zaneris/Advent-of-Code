@@ -42,4 +42,15 @@ public static class CharMapExtensions
 
         throw new Exception("Could not find path.");
     }
+
+    public static void For2d(char[][] map, Action<int, int> action)
+    {
+        for (var y = 0; y < map.Length; y++)
+        {
+            for (var x = 0; x < map[0].Length; x++)
+            {
+                action(y, x);
+            }
+        }
+    }
 }
