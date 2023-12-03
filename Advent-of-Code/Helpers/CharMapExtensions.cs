@@ -53,4 +53,21 @@ public static class CharMapExtensions
             }
         }
     }
+
+    public static void Adjacent(this char[][] map, int y, int x, Action<int, int> action, int size = 1)
+    {
+        for (var y2 = -size; y2 <= size; y2++)
+        {
+            for (var x2 = -size; x2 <= size; x2++)
+            {
+                var checkX = x + x2;
+                var checkY = y + y2;
+
+                if (checkX < 0 || checkY < 0) continue;
+                if (checkX >= map[0].Length || checkY >= map.Length) continue;
+                if (x2 == 0 && y2 == 0) continue;
+                action(checkY, checkX);
+            }
+        }
+    }
 }

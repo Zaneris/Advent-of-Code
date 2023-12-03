@@ -13,46 +13,6 @@ public class Day03 : AdventBase
         _map = Input.ToCharMap();
     }
 
-    private bool NextToSymbol(int y, int x)
-    {
-        for (var y2 = -1; y2 <= 1; y2++)
-        {
-            for (var x2 = -1; x2 <= 1; x2++)
-            {
-                var checkX = x + x2;
-                var checkY = y + y2;
-                if (checkX < 0 || checkY < 0) continue;
-                if (checkX >= _map[0].Length || checkY >= _map.Length) continue;
-                if (!char.IsAsciiDigit(_map[checkY][checkX]) && _map[checkY][checkX] != '.')
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private Point2d? NextToGear(int y, int x)
-    {
-        for (var y2 = -1; y2 <= 1; y2++)
-        {
-            for (var x2 = -1; x2 <= 1; x2++)
-            {
-                var checkX = x + x2;
-                var checkY = y + y2;
-                if (checkX < 0 || checkY < 0) continue;
-                if (checkX >= _map[0].Length || checkY >= _map.Length) continue;
-                if (_map[checkY][checkX] == '*')
-                {
-                    return new Point2d(checkY, checkX);
-                }
-            }
-        }
-
-        return null;
-    }
-
     protected override object InternalPart1()
     {
         int? numStart = null;
@@ -64,8 +24,16 @@ public class Day03 : AdventBase
             if (char.IsAsciiDigit(_map[y][x]))
             {
                 numStart ??= x;
-                if (!symbol && NextToSymbol(y, x))
-                    symbol = true;
+                if (!symbol)
+                {
+                    _map.Adjacent(y, x, (y2, x2) =>
+                    {
+                        if (_map[y2][x2] is (< '0' or > '9') and not '.')
+                        {
+                            symbol = true;
+                        }
+                    });
+                }
                 if (x == _map[0].Length - 1)
                     numEnd = x;
             }
@@ -104,8 +72,13 @@ public class Day03 : AdventBase
 
                 if (gear is null)
                 {
-                    var location = NextToGear(y, x);
-                    if (location is not null) gear = location;
+                    _map.Adjacent(y, x, (y2, x2) =>
+                    {
+                        if (_map[y2][x2] is '*')
+                        {
+                            gear = new Point2d(y2, x2);
+                        }
+                    });
                 }
 
                 if (x == _map[0].Length - 1)
