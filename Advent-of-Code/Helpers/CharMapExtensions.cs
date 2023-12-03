@@ -70,4 +70,12 @@ public static class CharMapExtensions
             }
         }
     }
+
+    public static string SubString(this char[] array, int? start, int? end = null, int? length = null)
+    {
+        if (start is null || end is null) throw new Exception("Cannot be null");
+        if (end is null && length is null) throw new Exception("Must provide length or end");
+        length ??= end - start + 1;
+        return new string(array, (int)start, (int)length!);
+    }
 }

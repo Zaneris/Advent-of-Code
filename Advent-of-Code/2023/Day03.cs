@@ -46,7 +46,7 @@ public class Day03 : AdventBase
 
             if (symbol)
             {
-                var num = new string(_map[y], (int)numStart!, (int)numEnd - (int)numStart + 1);
+                var num = _map[y].SubString(numStart, numEnd);
                 sum += int.Parse(num);
             }
 
@@ -93,15 +93,11 @@ public class Day03 : AdventBase
 
             if (gear is not null)
             {
-                var num = new string(_map[y], (int)numStart!, (int)numEnd - (int)numStart + 1);
+                var num = _map[y].SubString(numStart, numEnd);
                 var value = int.Parse(num);
 
-                var gear2d = (Point2d)gear;
-                if (!_gears.TryAdd(gear2d, value) && _gears[gear2d] >= 0)
-                {
-                    sum += _gears[gear2d] * value;
-                    _gears[gear2d] = -1;
-                }
+                if (!_gears.TryAdd((Point2d)gear, value))
+                    sum += _gears[(Point2d)gear] * value;
             }
 
             numStart = null;
