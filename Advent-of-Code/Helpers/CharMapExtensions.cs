@@ -43,7 +43,7 @@ public static class CharMapExtensions
         throw new Exception("Could not find path.");
     }
 
-    public static void For2d(char[][] map, Action<int, int> action)
+    public static void For(this char[][] map, Action<int, int> action)
     {
         for (var y = 0; y < map.Length; y++)
         {

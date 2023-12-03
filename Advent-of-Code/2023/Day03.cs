@@ -59,7 +59,7 @@ public class Day03 : AdventBase
         int? numEnd = null;
         bool symbol = false;
         long sum = 0;
-        CharMapExtensions.For2d(_map, (y, x) =>
+        _map.For((y, x) =>
         {
             if (char.IsAsciiDigit(_map[y][x]))
             {
@@ -96,7 +96,7 @@ public class Day03 : AdventBase
         int? numEnd = null;
         Point2d? gear = null;
         long sum = 0;
-        CharMapExtensions.For2d(_map, (y, x) =>
+        _map.For((y, x) =>
         {
             if (char.IsAsciiDigit(_map[y][x]))
             {
