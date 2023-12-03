@@ -69,4 +69,42 @@ public class Test2023
                          """);
         Assert.Equal("2286", day.Part2Answer);
     }
+
+    [Fact]
+    public void Day03_TestInput_Part1Sample1()
+    {
+        var day = _solutions.GetDay(2023, 3);
+        day.SetTestInput("""
+                         467..114..
+                         ...*......
+                         ..35..633.
+                         ......#...
+                         617*......
+                         .....+.58.
+                         ..592.....
+                         ......755.
+                         ...$.*....
+                         .664.598..
+                         """);
+        Assert.Equal("4361", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day03_TestInput_Part2Sample1()
+    {
+        var day = _solutions.GetDay(2023, 3);
+        day.SetTestInput("""
+                         467..114..
+                         ...*......
+                         ..35..633.
+                         ......#...
+                         617*......
+                         .....+.58.
+                         ..592.....
+                         ......755.
+                         ...$.*....
+                         .664.598..
+                         """);
+        Assert.Equal("467835", day.Part2Answer);
+    }
 }
