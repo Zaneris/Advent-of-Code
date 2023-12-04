@@ -3,10 +3,11 @@ using CommunityToolkit.HighPerformance;
 
 namespace AdventOfCode.Helpers;
 
-public static class ByteMapExtensions
+public static class CharMapExtensions
 {
     private static readonly Point2d[] _diagonals = { new(1, 1), new(-1, 1), new(1, -1), new(-1, -1) };
     private static readonly Point2d[] _cardinals = { new(0, 1), new(1, 0), new(-1, 0), new(0, -1) };
+    private static readonly Point2d[] _both = _cardinals.Concat(_diagonals).ToArray();
 
     /// <summary>
     /// Find number of steps for the shortest path between 2 points.
@@ -16,13 +17,13 @@ public static class ByteMapExtensions
     /// <param name="endRule">When is the end found? Passes point and map char of current position.</param>
     /// <param name="validStep">Is the step being attempted valid? Previous map char, attempted map char.</param>
     /// <param name="diagonals">Can we move diagonally?</param>
-    public static long ShortestPathSteps(this byte[][] map, Point2d start, Func<Point2d, byte, bool> endRule,
-        Func<byte, byte, bool> validStep, bool diagonals = false)
+    public static long ShortestPathSteps(this char[][] map, Point2d start, Func<Point2d, char, bool> endRule,
+        Func<char, char, bool> validStep, bool diagonals = false)
     {
         var queue = new Queue<(Point2d position, long steps)>();
         queue.Enqueue((start, 0));
         var seen = new Dictionary<string, long>();
-        var moves = diagonals ? _cardinals.Concat(_diagonals).ToArray() : _cardinals;
+        var moves = diagonals ? _both : _cardinals;
         var yLimit = map.Length;
         var xLimit = map[0].Length;
         while (queue.TryDequeue(out var target))
@@ -46,7 +47,7 @@ public static class ByteMapExtensions
         throw new Exception("Could not find path.");
     }
 
-    public static void For(this byte[][] map, Action<int, int> action)
+    public static void For(this char[][] map, Action<int, int> action)
     {
         for (var y = 0; y < map.Length; y++)
         {
@@ -57,36 +58,26 @@ public static class ByteMapExtensions
         }
     }
 
-    public static void Adjacent(this byte[][] map, int y, int x, Action<int, int> action, int size = 1)
+    public static IEnumerable<Point2d> Adjacent(this char[][] map, int y, int x)
     {
-        for (var y2 = -size; y2 <= size; y2++)
+        foreach (var move in _both)
         {
-            for (var x2 = -size; x2 <= size; x2++)
-            {
-                var checkX = x + x2;
-                var checkY = y + y2;
+            var checkX = x + move.X;
+            var checkY = y + move.Y;
 
-                if (checkX < 0 || checkY < 0) continue;
-                if (checkX >= map[0].Length || checkY >= map.Length) continue;
-                if (x2 == 0 && y2 == 0) continue;
-                action(checkY, checkX);
-            }
+            if (checkX < 0 || checkY < 0) continue;
+            if (checkX >= map[0].Length || checkY >= map.Length) continue;
+            yield return new Point2d(checkY, checkX);
         }
     }
 
     private static readonly StringBuilder _sb = new();
-    public static string SubString(this byte[] array, int? start, int? end = null, int? length = null)
+    public static string SubString(this char[] array, int? start, int? end = null, int? length = null)
     {
         if (start is null || end is null) throw new Exception("Cannot be null");
         if (end is null && length is null) throw new Exception("Must provide length or end");
         length ??= end - start + 1;
-        _sb.Clear();
-        for (var i = (int)start; i < start + length; i++)
-        {
-            _sb.Append((char)array[i]);
-        }
-
-        return _sb.ToString();
+        return new string(array, (int)start, (int)length!);
     }
 
     public static string SubString(this ReadOnlySpan2D<byte> map, int y, int start, int end)

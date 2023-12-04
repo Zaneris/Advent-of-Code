@@ -1,15 +1,9 @@
 namespace AdventOfCode.Helpers;
 
-public readonly struct Point2d
+public readonly struct Point2d(int y, int x)
 {
-    public long Y { get; init; }
-    public long X { get; init; }
-
-    public Point2d(long y, long x)
-    {
-        Y = y;
-        X = x;
-    }
+    public int Y { get; init; } = y;
+    public int X { get; init; } = x;
 
     public override string ToString()
     {
