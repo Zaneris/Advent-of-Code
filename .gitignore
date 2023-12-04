@@ -7,3 +7,4 @@ riderModule.iml
 *.DotSettings.user
 *.txt
 Saved.json
+.DS_Store

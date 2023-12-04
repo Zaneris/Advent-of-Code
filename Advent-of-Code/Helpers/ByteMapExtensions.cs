@@ -1,6 +1,8 @@
+using System.Text;
+
 namespace AdventOfCode.Helpers;
 
-public static class CharMapExtensions
+public static class ByteMapExtensions
 {
     private static readonly Point2d[] _diagonals = { new(1, 1), new(-1, 1), new(1, -1), new(-1, -1) };
     private static readonly Point2d[] _cardinals = { new(0, 1), new(1, 0), new(-1, 0), new(0, -1) };
@@ -13,8 +15,8 @@ public static class CharMapExtensions
     /// <param name="endRule">When is the end found? Passes point and map char of current position.</param>
     /// <param name="validStep">Is the step being attempted valid? Previous map char, attempted map char.</param>
     /// <param name="diagonals">Can we move diagonally?</param>
-    public static long ShortestPathSteps(this char[][] map, Point2d start, Func<Point2d, char, bool> endRule,
-        Func<char, char, bool> validStep, bool diagonals = false)
+    public static long ShortestPathSteps(this byte[][] map, Point2d start, Func<Point2d, byte, bool> endRule,
+        Func<byte, byte, bool> validStep, bool diagonals = false)
     {
         var queue = new Queue<(Point2d position, long steps)>();
         queue.Enqueue((start, 0));
@@ -43,7 +45,7 @@ public static class CharMapExtensions
         throw new Exception("Could not find path.");
     }
 
-    public static void For(this char[][] map, Action<int, int> action)
+    public static void For(this byte[][] map, Action<int, int> action)
     {
         for (var y = 0; y < map.Length; y++)
         {
@@ -54,7 +56,7 @@ public static class CharMapExtensions
         }
     }
 
-    public static void Adjacent(this char[][] map, int y, int x, Action<int, int> action, int size = 1)
+    public static void Adjacent(this byte[][] map, int y, int x, Action<int, int> action, int size = 1)
     {
         for (var y2 = -size; y2 <= size; y2++)
         {
@@ -71,11 +73,18 @@ public static class CharMapExtensions
         }
     }
 
-    public static string SubString(this char[] array, int? start, int? end = null, int? length = null)
+    private static readonly StringBuilder _sb = new();
+    public static string SubString(this byte[] array, int? start, int? end = null, int? length = null)
     {
         if (start is null || end is null) throw new Exception("Cannot be null");
         if (end is null && length is null) throw new Exception("Must provide length or end");
         length ??= end - start + 1;
-        return new string(array, (int)start, (int)length!);
+        _sb.Clear();
+        for (var i = (int)start; i < start + length; i++)
+        {
+            _sb.Append((char)array[i]);
+        }
+
+        return _sb.ToString();
     }
 }

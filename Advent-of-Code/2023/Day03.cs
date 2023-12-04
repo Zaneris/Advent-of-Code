@@ -5,12 +5,12 @@ namespace AdventOfCode._2023;
 
 public class Day03 : AdventBase
 {
-    private char[][] _map = null!;
+    private byte[][] _map = null!;
     private readonly Dictionary<Point2d, int> _gears = new();
 
     protected override void InternalOnLoad()
     {
-        _map = Input.ToCharMap();
+        _map = Input.ToByteMap();
     }
 
     protected override object InternalPart1()
@@ -21,14 +21,14 @@ public class Day03 : AdventBase
         long sum = 0;
         _map.For((y, x) =>
         {
-            if (char.IsAsciiDigit(_map[y][x]))
+            if (_map[y][x] is >= (byte)'0' and <= (byte)'9')
             {
                 numStart ??= x;
                 if (!symbol)
                 {
                     _map.Adjacent(y, x, (y2, x2) =>
                     {
-                        if (_map[y2][x2] is (< '0' or > '9') and not '.')
+                        if (_map[y2][x2] is (< (byte)'0' or > (byte)'9') and not (byte)'.')
                         {
                             symbol = true;
                         }
@@ -66,7 +66,7 @@ public class Day03 : AdventBase
         long sum = 0;
         _map.For((y, x) =>
         {
-            if (char.IsAsciiDigit(_map[y][x]))
+            if (_map[y][x] is >= (byte)'0' and <= (byte)'9')
             {
                 numStart ??= x;
 
@@ -74,7 +74,7 @@ public class Day03 : AdventBase
                 {
                     _map.Adjacent(y, x, (y2, x2) =>
                     {
-                        if (_map[y2][x2] is '*')
+                        if (_map[y2][x2] is (byte)'*')
                         {
                             gear = new Point2d(y2, x2);
                         }
