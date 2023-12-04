@@ -73,18 +73,18 @@ public static class ByteMapExtensions
         }
     }
 
+    private static readonly StringBuilder _sb = new();
     public static string SubString(this byte[] array, int? start, int? end = null, int? length = null)
     {
         if (start is null || end is null) throw new Exception("Cannot be null");
         if (end is null && length is null) throw new Exception("Must provide length or end");
         length ??= end - start + 1;
-        var sb = new StringBuilder();
-
+        _sb.Clear();
         for (var i = (int)start; i < start + length; i++)
         {
-            sb.Append((char)array[i]);
+            _sb.Append((char)array[i]);
         }
 
-        return sb.ToString();
+        return _sb.ToString();
     }
 }
