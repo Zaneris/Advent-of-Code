@@ -1,4 +1,5 @@
 using System.Text;
+using CommunityToolkit.HighPerformance;
 
 namespace AdventOfCode.Helpers;
 
@@ -83,6 +84,18 @@ public static class ByteMapExtensions
         for (var i = (int)start; i < start + length; i++)
         {
             _sb.Append((char)array[i]);
+        }
+
+        return _sb.ToString();
+    }
+
+    public static string SubString(this ReadOnlySpan2D<byte> map, int y, int start, int end)
+    {
+        var length = end - start + 1;
+        _sb.Clear();
+        for (var i = start; i < start + length; i++)
+        {
+            _sb.Append((char)map[y,i]);
         }
 
         return _sb.ToString();
