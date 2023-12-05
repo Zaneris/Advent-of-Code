@@ -7,10 +7,10 @@ namespace AdventOfCode._2023;
 public partial class Day05 : AdventBase
 {
     private readonly List<List<Range>> _maps = [];
-    private long[][] _seeds = null!;
 
     private record struct Range(long Destination, long Source, long Count);
     private record struct Result(long Location, long Consumed);
+    private record struct SeedRange(long Seed, long Range);
 
     protected override void InternalOnLoad()
     {
@@ -34,13 +34,15 @@ public partial class Day05 : AdventBase
 
     protected override object InternalPart1()
     {
-        _seeds = Input.Blocks[0].Text.ParseLongs().Select(x => new[] {x, 0}).ToArray();
+        var seeds = Input.Blocks[0].Text
+            .ParseLongs()
+            .ToArray();
 
-        var seedLocations = new long[_seeds.Length];
+        var seedLocations = new long[seeds.Length];
 
-        for (var seed = 0; seed < _seeds.Length; seed++)
+        for (var seed = 0; seed < seeds.Length; seed++)
         {
-            var current = _seeds[seed][0];
+            var current = seeds[seed];
             foreach (var map in _maps)
             {
                 long next = -1;
@@ -75,7 +77,8 @@ public partial class Day05 : AdventBase
 
                 var diff = current - range.Source;
                 next = range.Destination + diff;
-                if (consumed > diff) consumed = diff;
+                var remaining = range.Source + range.Count - current;
+                if (consumed > remaining) consumed = remaining;
                 break;
             }
 
@@ -87,20 +90,25 @@ public partial class Day05 : AdventBase
 
     protected override object InternalPart2()
     {
-        _seeds = Input.Blocks[0].Text.ParseLongs().Chunk(2).OrderBy(x => x[0]).ToArray();
+        var seeds = Input.Blocks[0].Text
+            .ParseLongs()
+            .Chunk(2)
+            .Select(x => new SeedRange(x[0], x[1]))
+            .OrderBy(x => x.Seed)
+            .ToArray();
 
         var seedLocations = new List<long>();
 
         long current = -1;
-        foreach (var seedRange in _seeds)
+        foreach (var seedRange in seeds)
         {
-            for (long seed = seedRange[0]; seed < seedRange[0] + seedRange[1]; seed++)
+            for (var seed = seedRange.Seed; seed < seedRange.Seed + seedRange.Range; seed++)
             {
                 if (current > seed) continue;
                 var result = EatSeeds(seed);
                 current = seed + result.Consumed;
                 seedLocations.Add(result.Location);
-                if (current >= seedRange[0] + seedRange[1]) break;
+                if (current >= seedRange.Seed + seedRange.Range) break;
             }
         }
 
