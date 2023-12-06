@@ -221,4 +221,26 @@ public class Test2023
                          """);
         Assert.Equal("46", day.Part2Answer);
     }
+
+    [Fact]
+    public void Day06_TestInput_Part1Sample1()
+    {
+        var day = _solutions.GetDay(2023, 6);
+        day.SetTestInput("""
+                         Time:      7  15   30
+                         Distance:  9  40  200
+                         """);
+        Assert.Equal("288", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day06_TestInput_Part2Sample1()
+    {
+        var day = _solutions.GetDay(2023, 6);
+        day.SetTestInput("""
+                         Time:      7  15   30
+                         Distance:  9  40  200
+                         """);
+        Assert.Equal("71503", day.Part2Answer);
+    }
 }

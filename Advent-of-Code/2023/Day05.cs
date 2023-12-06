@@ -97,7 +97,7 @@ public partial class Day05 : AdventBase
             .OrderBy(x => x.Value)
             .ToArray();
 
-        return LocationFirst(seeds);
+        //return LocationFirst(seeds);
 
         var seedLocations = new List<long>();
 
