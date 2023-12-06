@@ -3,8 +3,10 @@ using AdventOfCodeSupport;
 
 namespace AdventOfCode._2023;
 
-public class Day04 : AdventBase
+public partial class Day04 : AdventBase
 {
+    private readonly HashSet<string> _hash = [];
+
     protected override object InternalPart1()
     {
         var cards = Input.Lines;
@@ -12,12 +14,22 @@ public class Day04 : AdventBase
         foreach (var card in cards)
         {
             var numbers = card.Split(':')[1].Split('|');
-            var drawn = Regex.Matches(numbers[0], @"\d+").Select(x => int.Parse(x.Value));
-            var picked = Regex.Matches(numbers[1], @"\d+").Select(x => int.Parse(x.Value));
-            var intersect = drawn.Intersect(picked).ToHashSet();
-            if (intersect.Count > 0)
+            _hash.Clear();
+            var drawn = Digits().Matches(numbers[0]);
+            foreach (Match match in drawn)
             {
-                points += (long)Math.Pow(2f, intersect.Count - 1);
+                _hash.Add(match.Value);
+            }
+
+            var count = 0;
+            var picked = Digits().Matches(numbers[1]);
+            foreach (Match match in picked)
+            {
+                if (_hash.Contains(match.Value)) count++;
+            }
+            if (count > 0)
+            {
+                points += (long)Math.Pow(2f, count - 1);
             }
         }
         return points;
@@ -26,31 +38,39 @@ public class Day04 : AdventBase
     protected override object InternalPart2()
     {
         var cards = Input.Lines;
-        var cardNum = 0;
-        var available = new Dictionary<int, int>();
-        foreach (var card in cards)
+        var available = new int[cards.Length];
+        for (var i = 0; i < cards.Length; i++)
         {
-            cardNum++;
-            available[cardNum] = 1;
+            available[i] = 1;
         }
 
-        cardNum = 0;
+        var cardNum = -1;
         foreach (var card in cards)
         {
             cardNum++;
             var numbers = card.Split(':')[1].Split('|');
-            var drawn = Regex.Matches(numbers[0], @"\d+").Select(x => int.Parse(x.Value));
-            var picked = Regex.Matches(numbers[1], @"\d+").Select(x => int.Parse(x.Value));
-            var intersect = drawn.Intersect(picked).ToHashSet();
-            if (intersect.Count <= 0) continue;
-            for (var i = 0; i < available[cardNum]; i++)
+            _hash.Clear();
+            var drawn = Digits().Matches(numbers[0]);
+            foreach (Match match in drawn)
             {
-                for (var add = 1; add <= intersect.Count; add++)
-                {
-                    available[cardNum + add]++;
-                }
+                _hash.Add(match.Value);
+            }
+
+            var count = 0;
+            var picked = Digits().Matches(numbers[1]);
+            foreach (Match match in picked)
+            {
+                if(_hash.Contains(match.Value)) count++;
+            }
+            if (count <= 0) continue;
+            for (var add = 1; add <= count; add++)
+            {
+                available[cardNum + add]+=available[cardNum];
             }
         }
-        return available.Sum(x => x.Value);
+        return available.Sum(x => x);
     }
+
+    [GeneratedRegex(@"\d+")]
+    private static partial Regex Digits();
 }
