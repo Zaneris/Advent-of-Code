@@ -47,21 +47,17 @@ public class Day08 : AdventBase
         return FindSteps("AAA");
     }
 
-    private static long Lcm(IReadOnlyList<long> numbers)
-    {
-        BigInteger lcm = numbers[0];
-        for (var i = 1; i < numbers.Count; i++)
-        {
-            if (numbers[i] == 0) break;
-            lcm = lcm / BigInteger.GreatestCommonDivisor(lcm, numbers[i]) * numbers[i];
-        }
-        return (long)lcm;
-    }
 
     protected override object InternalPart2()
     {
         var steps = _nodes.Where(x => x.Key[2] == 'A').Select(x => FindSteps(x.Key, true)).ToArray();
+        BigInteger lcm = steps[0];
+        for (var i = 1; i < steps.Length; i++)
+        {
+            if (steps[i] == 0) break;
+            lcm = lcm / BigInteger.GreatestCommonDivisor(lcm, steps[i]) * steps[i];
+        }
 
-        return Lcm(steps);
+        return lcm;
     }
 }
