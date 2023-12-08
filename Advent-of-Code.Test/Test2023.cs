@@ -243,4 +243,32 @@ public class Test2023
                          """);
         Assert.Equal("71503", day.Part2Answer);
     }
+
+    [Fact]
+    public void Day07_TestInput_Part1Sample1()
+    {
+        var day = _solutions.GetDay(2023, 7);
+        day.SetTestInput("""
+                         32T3K 765
+                         T55J5 684
+                         KK677 28
+                         KTJJT 220
+                         QQQJA 483
+                         """);
+        Assert.Equal("6440", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day07_TestInput_Part2Sample1()
+    {
+        var day = _solutions.GetDay(2023, 7);
+        day.SetTestInput("""
+                         32T3K 765
+                         T55J5 684
+                         KK677 28
+                         KTJJT 220
+                         QQQJA 483
+                         """);
+        Assert.Equal("5905", day.Part2Answer);
+    }
 }
