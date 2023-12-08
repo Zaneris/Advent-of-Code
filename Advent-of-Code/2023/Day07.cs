@@ -39,6 +39,7 @@ public class Day07 : AdventBase
         {
             1 => handType switch
             {
+                Hands.HighCard => Hands.OnePair,
                 Hands.OnePair => Hands.ThreeOfAKind,
                 Hands.TwoPair => Hands.FullHouse,
                 Hands.ThreeOfAKind => Hands.FourOfAKind,
