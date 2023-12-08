@@ -271,4 +271,55 @@ public class Test2023
                          """);
         Assert.Equal("5905", day.Part2Answer);
     }
+
+    [Fact]
+    public void Day08_TestInput_Part1Sample1()
+    {
+        var day = _solutions.GetDay(2023, 8);
+        day.SetTestInput("""
+                         RL
+                         
+                         AAA = (BBB, CCC)
+                         BBB = (DDD, EEE)
+                         CCC = (ZZZ, GGG)
+                         DDD = (DDD, DDD)
+                         EEE = (EEE, EEE)
+                         GGG = (GGG, GGG)
+                         ZZZ = (ZZZ, ZZZ)
+                         """);
+        Assert.Equal("2", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day08_TestInput_Part1Sample2()
+    {
+        var day = _solutions.GetDay(2023, 8);
+        day.SetTestInput("""
+                         LLR
+
+                         AAA = (BBB, BBB)
+                         BBB = (AAA, ZZZ)
+                         ZZZ = (ZZZ, ZZZ)
+                         """);
+        Assert.Equal("6", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day08_TestInput_Part2Sample1()
+    {
+        var day = _solutions.GetDay(2023, 8);
+        day.SetTestInput("""
+                         LR
+                         
+                         11A = (11B, XXX)
+                         11B = (XXX, 11Z)
+                         11Z = (11B, XXX)
+                         22A = (22B, XXX)
+                         22B = (22C, 22C)
+                         22C = (22Z, 22Z)
+                         22Z = (22B, 22B)
+                         XXX = (XXX, XXX)
+                         """);
+        Assert.Equal("6", day.Part2Answer);
+    }
 }
