@@ -76,9 +76,9 @@ public partial class Day05 : AdventBase
                 if (current < range.Source || current >= range.Source + range.Count) continue;
 
                 var diff = current - range.Source;
-                next = range.Destination + diff;
-                var remaining = range.Source + range.Count - current;
-                if (fitThrough > remaining) fitThrough = remaining;
+                next = range.Destination + diff; // Starting point on next map
+                var remaining = range.Source + range.Count - current; // How much of our range could've fit through
+                if (fitThrough > remaining) fitThrough = remaining; // Reduce count of maximum range fitting from start through to end
                 break;
             }
 
@@ -97,17 +97,17 @@ public partial class Day05 : AdventBase
             .OrderBy(x => x.Value)
             .ToArray();
 
-        //return LocationFirst(seeds);
+        // return LocationFirst(seeds); // Faster way of doing things, ignore for now
 
         var seedLocations = new List<long>();
 
         long current = -1;
-        foreach (var seedRange in seeds)
+        foreach (var seedRange in seeds) // Loop through each seed range pair
         {
             for (var seed = seedRange.Value; seed < seedRange.Value + seedRange.Count; seed++)
             {
-                if (current > seed) continue;
-                var result = EatSeeds(seed);
+                if (current > seed) continue; // If we already verified this seed fits through, check next seed
+                var result = EatSeeds(seed); // See how much of our seed range fits through to a contiguous range of locations
                 current = seed + result.FitThrough;
                 seedLocations.Add(result.Value);
                 if (current >= seedRange.Value + seedRange.Count) break;
@@ -117,55 +117,55 @@ public partial class Day05 : AdventBase
         return seedLocations.Min();
     }
 
-    private long LocationFirst(Range[] seeds)
-    {
-        long next = 0;
-        foreach (var range in _maps[6].OrderBy(x => x.Destination).Select(x => new Range(x.Destination, x.Count)))
-        {
-            while (next < range.Value + range.Count)
-            {
-                var location = next < range.Value ? range.Value : next;
-                var check = new Range(location, range.Count - (location - range.Value));
-                var result = SpitSeeds(check);
-                var resultMax = result.Value + result.FitThrough;
-                foreach (var seed in seeds)
-                {
-                    var seedMax = seed.Value + seed.Count;
-                    if (result.Value >= seed.Value && seed.Value <= resultMax
-                        && seedMax >= result.Value && seedMax >= result.Value)
-                    {
-                        return location;
-                    }
-                }
-                next = range.Value + result.FitThrough;
-            }
-        }
-
-        throw new Exception();
-    }
-
-    private Result SpitSeeds(Range locationRange)
-    {
-        var fitThrough = locationRange.Count;
-        var current = locationRange.Value;
-        for (var i = 6; i >= 0; i--)
-        {
-            var map = _maps[i];
-            long next = -1;
-            foreach (var range in map)
-            {
-                if (current < range.Destination || current >= range.Destination + range.Count) continue;
-
-                var diff = current - range.Destination;
-                next = range.Source + diff;
-                var remaining = range.Destination + range.Count - current;
-                if (fitThrough > remaining) fitThrough = remaining;
-                break;
-            }
-
-            if (next >= 0) current = next;
-        }
-
-        return new Result(current, fitThrough);
-    }
+    // private long LocationFirst(Range[] seeds)
+    // {
+    //     long next = 0;
+    //     foreach (var range in _maps[6].OrderBy(x => x.Destination).Select(x => new Range(x.Destination, x.Count)))
+    //     {
+    //         while (next < range.Value + range.Count)
+    //         {
+    //             var location = next < range.Value ? range.Value : next;
+    //             var check = new Range(location, range.Count - (location - range.Value));
+    //             var result = SpitSeeds(check);
+    //             var resultMax = result.Value + result.FitThrough;
+    //             foreach (var seed in seeds)
+    //             {
+    //                 var seedMax = seed.Value + seed.Count;
+    //                 if (result.Value >= seed.Value && seed.Value <= resultMax
+    //                     && seedMax >= result.Value && seedMax >= result.Value)
+    //                 {
+    //                     return location;
+    //                 }
+    //             }
+    //             next = range.Value + result.FitThrough;
+    //         }
+    //     }
+    //
+    //     throw new Exception();
+    // }
+    //
+    // private Result SpitSeeds(Range locationRange)
+    // {
+    //     var fitThrough = locationRange.Count;
+    //     var current = locationRange.Value;
+    //     for (var i = 6; i >= 0; i--)
+    //     {
+    //         var map = _maps[i];
+    //         long next = -1;
+    //         foreach (var range in map)
+    //         {
+    //             if (current < range.Destination || current >= range.Destination + range.Count) continue;
+    //
+    //             var diff = current - range.Destination;
+    //             next = range.Source + diff;
+    //             var remaining = range.Destination + range.Count - current;
+    //             if (fitThrough > remaining) fitThrough = remaining;
+    //             break;
+    //         }
+    //
+    //         if (next >= 0) current = next;
+    //     }
+    //
+    //     return new Result(current, fitThrough);
+    // }
 }
