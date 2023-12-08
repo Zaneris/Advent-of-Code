@@ -54,7 +54,6 @@ public class Day08 : AdventBase
         BigInteger lcm = steps[0];
         for (var i = 1; i < steps.Length; i++)
         {
-            if (steps[i] == 0) break;
             lcm = lcm / BigInteger.GreatestCommonDivisor(lcm, steps[i]) * steps[i];
         }
 
