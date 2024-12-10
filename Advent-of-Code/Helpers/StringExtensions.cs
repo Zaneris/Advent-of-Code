@@ -9,6 +9,6 @@ public static partial class StringExtensions
         return DigitsRegex().Matches(s).Select(x => long.Parse(x.Value));
     }
 
-    [GeneratedRegex(@"\d+")]
+    [GeneratedRegex(@"-?\d+")]
     private static partial Regex DigitsRegex();
 }

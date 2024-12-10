@@ -322,4 +322,88 @@ public class Test2023
                          """);
         Assert.Equal("6", day.Part2Answer);
     }
+
+    [Fact]
+    public void Day09_TestInput_Part1Sample1()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         0 3 6 9 12 15
+                         """);
+        Assert.Equal("18", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part1Sample2()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         1 3 6 10 15 21
+                         """);
+        Assert.Equal("28", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part1Sample3()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         10 13 16 21 30 45
+                         """);
+        Assert.Equal("68", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part1Sample4()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         0 3 6 9 12 15
+                         1 3 6 10 15 21
+                         10 13 16 21 30 45
+                         """);
+        Assert.Equal("114", day.Part1Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part2Sample1()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         0 3 6 9 12 15
+                         """);
+        Assert.Equal("-3", day.Part2Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part2Sample2()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         1 3 6 10 15 21
+                         """);
+        Assert.Equal("0", day.Part2Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part2Sample3()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         10 13 16 21 30 45
+                         """);
+        Assert.Equal("5", day.Part2Answer);
+    }
+
+    [Fact]
+    public void Day09_TestInput_Part2Sample4()
+    {
+        var day = _solutions.GetDay(2023, 9);
+        day.SetTestInput("""
+                         0 3 6 9 12 15
+                         1 3 6 10 15 21
+                         10 13 16 21 30 45
+                         """);
+        Assert.Equal("2", day.Part2Answer);
+    }
 }
